@@ -49,7 +49,7 @@ const Page = () => {
     <div>
       <MaxWidthWrapper className="my-10">
         <h1 className="text-center text-4xl font-bold">Orders</h1>
-        <div className="mx-auto grid grid-cols-2">
+        <div className="mx-auto grid grid-cols-2 my-10">
           {/* Filters */}
           <div className="flex flex-col items-center">
             <h1 className="font-semibold">Filter</h1>
@@ -144,7 +144,7 @@ const Page = () => {
                   >
                     {order.status}
                   </TableCell>
-                  <TableCell>{order.items.length}</TableCell>
+                  <TableCell className="text-center sm:text-left">{order.items.length}</TableCell>
                 </TableRow>
               ))}
           </TableBody>

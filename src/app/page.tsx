@@ -14,7 +14,7 @@ export default function Home() {
           </CardHeader>
           <CardContent>
             <h1 className="text-center">Select an option to proceed</h1>
-            <div className="mt-1.5 flex flex-wrap gap-2">
+            <div className="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-2">
               <Link
                 href="/orders"
                 className={cn(buttonVariants({ variant: "outline" }))}
