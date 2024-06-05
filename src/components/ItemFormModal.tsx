@@ -1,3 +1,4 @@
+// Importing necessary components and utilities
 import { Dispatch, SetStateAction, useState } from "react";
 import { Dialog, DialogHeader, DialogContent, DialogTitle } from "./ui/dialog";
 import { Input } from "./ui/input";
@@ -7,6 +8,7 @@ import { Button } from "./ui/button";
 import { data } from "@/data/data";
 import { useToast } from "./ui/use-toast";
 
+// ItemFormModal component for adding new items
 const ItemFormModal = ({
   isOpen,
   setIsOpen,
@@ -18,15 +20,18 @@ const ItemFormModal = ({
   items: Item[];
   setItems: Dispatch<SetStateAction<Item[]>>;
 }) => {
+  // useToast hook for showing toast notifications
   const { toast } = useToast();
+  // formData state for form data
   const [formData, setFormData] = useState<Item>({
     id: 0,
     name: "",
     stock: 0,
   });
+
+  // Function to validate form data
   const validateForm = () => {
-    console.log(isNaN(Number(formData.id)));
-    console.log(isNaN(Number(formData.quantity)));
+    // Check if ID is valid
     if (isNaN(Number(formData.id)) || Number(formData.id) < 0) {
       toast({
         title: "Invalid ID",
@@ -35,6 +40,7 @@ const ItemFormModal = ({
       });
       return false;
     }
+    // Check if quantity is valid
     if (isNaN(Number(formData.quantity)) || Number(formData.quantity) < 0) {
       toast({
         title: "Invalid Quantity",
@@ -45,13 +51,14 @@ const ItemFormModal = ({
     }
     return true;
   };
+
+  // Function to add a new item
   const addItem = () => {
     if (!validateForm()) return;
     // Check if an item with the same id already exists
     const existingItem = items.find(
       (item) => Number(item.id) === Number(formData.id),
     );
-    console.log("Already existing item", existingItem);
     if (existingItem) {
       // If an item with the same id exists, show an error message
       toast({
@@ -72,6 +79,8 @@ const ItemFormModal = ({
       setIsOpen(false);
     }
   };
+
+  // Render the form
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>

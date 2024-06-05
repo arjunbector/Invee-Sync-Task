@@ -2,6 +2,7 @@
 import ItemFormModal from "@/components/ItemFormModal";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button } from "@/components/ui/button";
+// Importing DropdownMenu components
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+// Importing Table components
 import {
   Table,
   TableBody,
@@ -19,18 +21,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { data } from "@/data/data";
-import { Item } from "@/types/types";
-import { TrashIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
-const FILTERS = ["All", "In Stock", "Out of Stock"];
+import { data } from "@/data/data"; // Importing data
+import { Item } from "@/types/types"; // Importing types
+import { TrashIcon } from "@radix-ui/react-icons"; // Importing icons
+import { useState } from "react"; // Importing hooks
+
+const FILTERS = ["All", "In Stock", "Out of Stock"]; // Filter options
 
 const Page = () => {
   const [filter, setFilter] = useState("All"); // Initialize state for filter
 
-  const [items, setItems] = useState<Item[]>(data.items);
-  const [openModal, setOpenModal] = useState(false);
+  const [items, setItems] = useState<Item[]>(data.items); // Initialize state for items
+  const [openModal, setOpenModal] = useState(false); // Initialize state for modal
 
+  // Function to delete an item
   const deleteItem = (id: number) => {
     let itemToDelete = data.items.find((item) => item.id === id);
     if (itemToDelete) {
