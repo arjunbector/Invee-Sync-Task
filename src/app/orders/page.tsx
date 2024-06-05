@@ -64,6 +64,7 @@ const Page = () => {
                 <DropdownMenuSeparator />
                 {FILTERS.map((filter) => (
                   <DropdownMenuItem
+                  key={filter}
                     onClick={() => {
                       // Filter orders based on the selected filter
                       setFilter(filter);
@@ -96,6 +97,7 @@ const Page = () => {
                 <DropdownMenuSeparator />
                 {SORT_OPTIONS.map((option) => (
                   <DropdownMenuItem
+                  key={option}
                     onClick={() => {
                       // Sort orders based on the selected option
                       setSortOption(option);
@@ -124,6 +126,7 @@ const Page = () => {
             {orders &&
               orders.map((order) => (
                 <TableRow
+                key={order.id}
                   className="cursor-pointer"
                   onClick={() => {
                     // On click, navigate to order details page

@@ -15,13 +15,17 @@ import {
 } from "@/components/ui/table";
 import { data } from "@/data/data"; // Import data
 import { Order } from "@/types/types"; // Import Order type
-import { useSearchParams } from "next/navigation"; // Hook for getting search parameters
+import { notFound } from "next/navigation";
 import { useState } from "react"; // Hook for state management
-
+interface PageProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
+}
 // Define the Page component
-const Page = () => {
-  const searchParams = useSearchParams(); // Get search parameters
-  const orderId = Number(searchParams.get("id")); // Get order ID from search parameters
+const Page = ({ searchParams }: PageProps) => {
+  const { id } = searchParams;
+  const orderId = Number(id); // Parse the order ID from the URL
   const [order, setOrder] = useState<Order | undefined>(
     data.orders.find((order) => order.id === orderId), // Find the order with the given ID
   );
@@ -94,10 +98,16 @@ const Page = () => {
                     <TableCell>{item.quantity ?? 0}</TableCell>
                     <TableCell
                       className={`${
-                        item.quantity ?? 0 > 0 ? "text-green-500" : "text-red-500"
+                        data.items.find((stockItem) => stockItem.id === item.id)
+                          ?.stock ?? 0 > 0
+                          ? "text-green-500"
+                          : "text-red-500"
                       }`}
                     >
-                      {item.quantity ?? 0 > 0 ? "Available" : "Not available"}
+                      {data.items.find((stockItem) => stockItem.id === item.id)
+                        ?.stock ?? 0 > 0
+                        ? "Available"
+                        : "Not available"}
                     </TableCell>
                   </TableRow>
                 ))}
