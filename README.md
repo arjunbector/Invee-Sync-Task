@@ -30,7 +30,8 @@ npm install
 npm run build
 ```
 5. Run the server:
-```npm run start
+```
+npm run start
 ```
 
 ## Usage
