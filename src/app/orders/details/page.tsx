@@ -75,44 +75,48 @@ const Page = ({ searchParams }: PageProps) => {
           </Card>
         </div>
         <div className="sm:mx-20">
-          <Table>
-            <TableCaption className="mt-4">
-              {/* Display order ID */}
-              List of all the items for order ID {orderId}
-            </TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead>Stock Availablility</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {/* Map through order items and create a table row for each */}
-              {order &&
-                order.items.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>{item.id}</TableCell>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.quantity ?? 0}</TableCell>
-                    <TableCell
-                      className={`${
-                        data.items.find((stockItem) => stockItem.id === item.id)
-                          ?.stock ?? 0 > 0
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }`}
-                    >
-                      {data.items.find((stockItem) => stockItem.id === item.id)
-                        ?.stock ?? 0 > 0
-                        ? "Available"
-                        : "Not available"}
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+          <Card className="p-4">
+            <Table>
+              <TableCaption className="mt-4">
+                {/* Display order ID */}
+                List of all the items for order ID {orderId}
+              </TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Quantity</TableHead>
+                  <TableHead>Stock Availablility</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {/* Map through order items and create a table row for each */}
+                {order &&
+                  order.items.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>{item.id}</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.quantity ?? 0}</TableCell>
+                      <TableCell
+                        className={`${
+                          data.items.find(
+                            (stockItem) => stockItem.id === item.id,
+                          )?.stock ?? 0 > 0
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}
+                      >
+                        {data.items.find(
+                          (stockItem) => stockItem.id === item.id,
+                        )?.stock ?? 0 > 0
+                          ? "Available"
+                          : "Not available"}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </Card>
         </div>
         <div className="full flex flex-wrap items-center justify-center">
           <Button

@@ -2,6 +2,7 @@
 import ItemFormModal from "@/components/ItemFormModal";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 // Importing DropdownMenu components
 import {
   DropdownMenu,
@@ -41,7 +42,7 @@ const Page = () => {
       let newItems = items.filter((item) => item.id !== id);
       setItems(newItems);
       //@ts-ignore
-      data.items = items
+      data.items = items;
     }
   };
 
@@ -50,7 +51,7 @@ const Page = () => {
       <MaxWidthWrapper className="my-10">
         <h1 className="text-center text-4xl font-bold">Inventory</h1>
 
-        <div className="flex w-full justify-center items-center my-5">
+        <div className="my-5 flex w-full items-center justify-center">
           <h1 className="font-semibold">Filters:</h1>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -63,7 +64,7 @@ const Page = () => {
               <DropdownMenuSeparator />
               {FILTERS.map((filter) => (
                 <DropdownMenuItem
-                key={filter}
+                  key={filter}
                   onClick={() => {
                     // Filter orders based on the selected filter
                     setFilter(filter);
@@ -71,7 +72,9 @@ const Page = () => {
                       setItems(data.items);
                     } else {
                       if (filter === "In Stock") {
-                        setItems(data.items.filter((item) => item.stock ?? 0 > 0));
+                        setItems(
+                          data.items.filter((item) => item.stock ?? 0 > 0),
+                        );
                       } else {
                         setItems(data.items.filter((item) => item.stock === 0));
                       }
@@ -84,36 +87,38 @@ const Page = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <Table>
-          <TableCaption>
-            List of all the items available in inventory
-          </TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Stock</TableHead>
-              <TableHead>Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {items.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>{item.id}</TableCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.stock}</TableCell>
-                <TableCell>
-                  <Button
-                    className="bg-red-500 hover:bg-red-600"
-                    onClick={() => deleteItem(item.id)}
-                  >
-                    <TrashIcon className="h-4 w-4 shrink-0" />
-                  </Button>
-                </TableCell>
+        <Card className="p-4">
+          <Table>
+            <TableCaption>
+              List of all the items available in inventory
+            </TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Stock</TableHead>
+                <TableHead>Action</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {items.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.stock}</TableCell>
+                  <TableCell>
+                    <Button
+                      className="bg-red-500 hover:bg-red-600"
+                      onClick={() => deleteItem(item.id)}
+                    >
+                      <TrashIcon className="h-4 w-4 shrink-0" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
         <div className="my-4 flex justify-center">
           <Button
             onClick={() => {

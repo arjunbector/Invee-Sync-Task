@@ -2,6 +2,7 @@
 // Import necessary components and hooks
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,11 +21,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { data } from "@/data/data"; // Import data
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation"; // Hook for routing
 import { useState } from "react"; // Hook for state management
 
 const FILTERS = ["None", "Pending", "Completed"];
-const SORT_OPTIONS = ["None", "Customer Name", "Item Count"];
+const SORT_OPTIONS = ["None", "ID", "Customer Name", "Item Count"];
 
 // Define the Page component
 const Page = () => {
@@ -40,6 +42,8 @@ const Page = () => {
       sortedOrders.sort((a, b) => a.customer.localeCompare(b.customer));
     } else if (option === "Item Count") {
       sortedOrders.sort((a, b) => a.items.length - b.items.length);
+    } else if (option === "ID") {
+      sortedOrders.sort((a, b) => a.id - b.id);
     }
     setOrders(sortedOrders);
   };
@@ -49,13 +53,16 @@ const Page = () => {
     <div>
       <MaxWidthWrapper className="my-10">
         <h1 className="text-center text-4xl font-bold">Orders</h1>
-        <div className="mx-auto grid grid-cols-2 my-10">
+        <div className="mx-auto my-10 grid grid-cols-2">
           {/* Filters */}
           <div className="flex flex-col items-center">
             <h1 className="font-semibold">Filter</h1>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost">{filter}</Button>
+                <Button variant="ghost">
+                  {filter}{" "}
+                  <ChevronDownIcon className="ml-2 h-4 w-4 text-zinc-500" />
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>
@@ -64,7 +71,7 @@ const Page = () => {
                 <DropdownMenuSeparator />
                 {FILTERS.map((filter) => (
                   <DropdownMenuItem
-                  key={filter}
+                    key={filter}
                     onClick={() => {
                       // Filter orders based on the selected filter
                       setFilter(filter);
@@ -90,14 +97,17 @@ const Page = () => {
             <h1 className="font-semibold">Sort By</h1>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost">{sortOption}</Button>
+                <Button variant="ghost">
+                  {sortOption}{" "}
+                  <ChevronDownIcon className="ml-2 h-4 w-4 text-zinc-500" />
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Select a sorting option</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {SORT_OPTIONS.map((option) => (
                   <DropdownMenuItem
-                  key={option}
+                    key={option}
                     onClick={() => {
                       // Sort orders based on the selected option
                       setSortOption(option);
@@ -111,44 +121,48 @@ const Page = () => {
             </DropdownMenu>
           </div>
         </div>
-        <Table>
-          <TableCaption>List of all the orders.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Customer Name</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Item Count</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {/* Map through orders and create a table row for each */}
-            {orders &&
-              orders.map((order) => (
-                <TableRow
-                key={order.id}
-                  className="cursor-pointer"
-                  onClick={() => {
-                    // On click, navigate to order details page
-                    router.push(`/orders/details?id=${order.id}`);
-                  }}
-                >
-                  <TableCell>{order.id}</TableCell>
-                  <TableCell>{order.customer}</TableCell>
-                  <TableCell
-                    className={
-                      order.status === "Completed"
-                        ? "text-green-600"
-                        : "text-red-500"
-                    }
+        <Card className="p-4">
+          <Table>
+            <TableCaption>Click on a row to view details.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID</TableHead>
+                <TableHead>Customer Name</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Item Count</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {/* Map through orders and create a table row for each */}
+              {orders &&
+                orders.map((order) => (
+                  <TableRow
+                    key={order.id}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      // On click, navigate to order details page
+                      router.push(`/orders/details?id=${order.id}`);
+                    }}
                   >
-                    {order.status}
-                  </TableCell>
-                  <TableCell className="text-center sm:text-left">{order.items.length}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+                    <TableCell>{order.id}</TableCell>
+                    <TableCell>{order.customer}</TableCell>
+                    <TableCell
+                      className={
+                        order.status === "Completed"
+                          ? "text-green-600"
+                          : "text-red-500"
+                      }
+                    >
+                      {order.status}
+                    </TableCell>
+                    <TableCell className="text-center sm:text-left">
+                      {order.items.length}
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </Card>
       </MaxWidthWrapper>
     </div>
   );
