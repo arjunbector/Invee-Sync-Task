@@ -2,7 +2,7 @@ export const data = {
     "orders": [
         {
             "id": 1,
-            "customer": "Customer A",
+            "customer": "Customer E",
             "items": [
                 { "id": 1, "name": "Item 1", "quantity": 5 },
                 { "id": 2, "name": "Item 2", "quantity": 3 }
@@ -21,7 +21,7 @@ export const data = {
         },
         {
             "id": 5,
-            "customer": "Customer E",
+            "customer": "Customer A",
             "items": [
                 { "id": 4, "name": "Item 4", "quantity": 1 },
                 { "id": 5, "name": "Item 5", "quantity": 2 },
@@ -54,7 +54,7 @@ export const data = {
         { "id": 2, "name": "Item 2", "stock": 15 },
         { "id": 3, "name": "Item 3", "stock": 0 },
         { "id": 4, "name": "Item 4", "stock": 25 },
-        { "id": 5, "name": "Item 5", "stock": 30 },
+        { "id": 5, "name": "Item 5", "stock": 0 },
         { "id": 6, "name": "Item 6", "stock": 10 },
         { "id": 7, "name": "Item 7", "stock": 5 }
     ]
